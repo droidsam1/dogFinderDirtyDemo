@@ -1,13 +1,25 @@
 <html>
 <head>
-    <title>Dog Finder Dirty Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+	<title>Dog Finder Dirty Demo</title>
+
 <body>
-    <div id="qr-reader" style="width:500px"></div>
-    <div id="qr-reader-results"></div>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+		<div id="qr-reader" style="width:500px"></div>
+		<div id="qr-reader-results" role="toolbar" class="btn-toolbar" ></div>
+
+	</div>
+</div>
 </body>
 
 
 <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
@@ -30,15 +42,16 @@
         }
     }
 	function customTexts(){
-	console.log("executed");
+		console.log("executed");
 		$("#qr-reader div span")[0].innerHTML = "Scanner";
 		$("#qr-reader__dashboard_section_csr div button")[0].innerHTML = "Camera Scanning";
 	}
   
-  function createRefreshButton(phoneNumber) {
+  function createCallButton(phoneNumber) {
     return $('<button/>', {
         text: 'Call owner',
         id: 'btn_call',
+		class: "btn btn-primary btn-lg mr-3",
         onclick: "location.href='" + phoneNumber + "';"
     });
 }
@@ -53,6 +66,7 @@ function refresh(){
     return $('<button/>', {
         text: 'Cancel',
         id: 'btn_cancel',
+		class : "btn btn-secondary btn-lg",
         onclick: 'refresh();'
     });
 	}
@@ -67,7 +81,7 @@ function createQRScanner(){
 function onScanSuccess(qrCodeMessage) {
 	if (qrCodeMessage !== lastResult) {
 	lastResult = qrCodeMessage;
-	var button = createRefreshButton(qrCodeMessage);
+	var button = createCallButton(qrCodeMessage);
 	var cancelButton = createCancelButton();
 	  $('#qr-reader-results').append(button);
 	  $('#qr-reader-results').append(cancelButton);
