@@ -29,6 +29,14 @@
 		$("#qr-reader div span")[0].innerHTML = "Scanner";
 		$("#qr-reader__dashboard_section_csr div button")[0].innerHTML = "Camera Scanning";
 	}
+  
+  function createRefreshButton(phoneNumber) {
+    return $('<button/>', {
+        text: 'Call owner',
+        id: 'btn_call',
+        onclick: "location.href='" + phoneNumber + "';"
+    });
+}
 
 
     docReady(function () {
@@ -36,15 +44,11 @@
         var lastResult, countResults = 0;
         function onScanSuccess(qrCodeMessage) {
             if (qrCodeMessage !== lastResult) {
-var link = $('<a>',{
-    text:'Call owner',
-    id: 'phoneNumber',
-    href:qrCodeMessage
-});
-
-//start dummy test to check for handler
-link.appendTo('body');
-$('#phoneNumber').trigger('click');
+            lastResult = qrCodeMessage;
+						var button = createRefreshButton(qrCodeMessage);
+          $('#qr-reader-results').append(button);
+          $('#qr-reader').hide();
+          $('#btn_call').trigger('click');
 
             
             }
