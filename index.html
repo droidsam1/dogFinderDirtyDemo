@@ -12,6 +12,11 @@
 
 
 <script>
+
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+		
+		
     function docReady(fn) {
         // see if DOM is already available
         if (document.readyState === "complete"
@@ -38,26 +43,42 @@
     });
 }
 
+function refresh(){
+	$('#qr-reader').show();
+	$('#qr-reader-results').empty();
+	createQRScanner();
+}
 
-    docReady(function () {
-        var resultContainer = document.getElementById('qr-reader-results');
-        var lastResult, countResults = 0;
-        function onScanSuccess(qrCodeMessage) {
-            if (qrCodeMessage !== lastResult) {
-            lastResult = qrCodeMessage;
-						var button = createRefreshButton(qrCodeMessage);
-          $('#qr-reader-results').append(button);
-          $('#qr-reader').hide();
-          $('#btn_call').trigger('click');
+  function createCancelButton() {
+    return $('<button/>', {
+        text: 'Cancel',
+        id: 'btn_cancel',
+        onclick: 'refresh();'
+    });
+	}
 
-            
-            }
-        }
+function createQRScanner(){
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess);
 		setTimeout(customTexts, 10);
-    });
+}
+
+function onScanSuccess(qrCodeMessage) {
+	if (qrCodeMessage !== lastResult) {
+	lastResult = qrCodeMessage;
+	var button = createRefreshButton(qrCodeMessage);
+	var cancelButton = createCancelButton();
+	  $('#qr-reader-results').append(button);
+	  $('#qr-reader-results').append(cancelButton);
+	  $('#qr-reader').hide();
+	  $('#btn_call').trigger('click');
+	}
+}
+
+docReady(function () {
+	createQRScanner();
+});
 	
 	
 	
