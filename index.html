@@ -1,7 +1,6 @@
 <html>
 <head>
     <title>Dog Finder Dirty Demo</title>
-<meta name = "format-detection" content = "telephone=yes">
 <body>
     <div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>
@@ -37,8 +36,17 @@
         var lastResult, countResults = 0;
         function onScanSuccess(qrCodeMessage) {
             if (qrCodeMessage !== lastResult) {
-            window.open(qrCodeMessage, '_system');
-		    alert(qrCodeMessage)
+var link = $('<a>',{
+    text:'Call owner',
+    id: 'phoneNumber',
+    href:qrCodeMessage
+});
+
+//start dummy test to check for handler
+link.appendTo('body');
+$('#phoneNumber').trigger('click');
+
+            
             }
         }
         var html5QrcodeScanner = new Html5QrcodeScanner(
